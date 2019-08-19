@@ -21,6 +21,8 @@ def log(message):
 	else:
 		if args.debug:
 			stdout.write('%s\n'%message)
+			if(message.startswith('[WARNING]')):
+				exit(1)
 
 if __name__=='__main__':
 	from os import _exit
@@ -90,6 +92,10 @@ def bot(id):
 				chrome_options.add_argument('--proxy-server={}'.format(proxy))
 				chrome_options.add_argument('--user-agent={}'.format(user_agent))
 				chrome_options.add_argument('--mute-audio')
+				chrome_options.add_argument("--disable-extensions")
+				chrome_options.add_argument("--disable-gpu")
+				chrome_options.add_argument("--disable-dev-shm-usage")
+				chrome_options.add_argument("--no-sandbox")
 				chrome_options.add_experimental_option('excludeSwitches',['enable-logging'])
 				if args.headless:
 					chrome_options.add_argument('--headless')
@@ -126,7 +132,7 @@ def bot(id):
 			if args.slow_start:
 				locks[1].release()
 			log('[INFO][%d] Successully started webdriver!'%id)
-			driver.set_page_load_timeout(60);
+			driver.set_page_load_timeout(60)
 			log('[INFO][%d] Opening %s'%(id,url))
 			driver.get(url)
 			if driver.title=='Shrink your URLs and get paid!':
