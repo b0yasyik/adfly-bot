@@ -87,9 +87,15 @@ def bot(id):
 				executable_dir=path_join(environ['APPDATA'],'DeBos','drivers')
 			else:
 				executable_dir=path_join(environ['HOME'],'.DeBos','drivers')
+			seleniumwire_options={
+				'proxy':{
+					'http':'http://%s'%proxy,
+					'https':'https://%s'%proxy,
+					'no_proxy':'localhost,127.0.0.1'
+				}
+			}
 			if args.driver=='chrome':
 				chrome_options=webdriver.ChromeOptions()
-				chrome_options.add_argument('--proxy-server={}'.format(proxy))
 				chrome_options.add_argument('--user-agent={}'.format(user_agent))
 				chrome_options.add_argument('--mute-audio')
 				chrome_options.add_argument("--disable-extensions")
@@ -105,17 +111,12 @@ def bot(id):
 					executable_path=path_join(executable_dir,'chromedriver.exe')
 				else:
 					executable_path=path_join(executable_dir,'chromedriver')
-				driver=webdriver.Chrome(options=chrome_options,executable_path=executable_path)
+				driver=webdriver.Chrome(options=chrome_options,seleniumwire_options=seleniumwire_options,executable_path=executable_path)
 			else:
 				firefox_options=webdriver.FirefoxOptions()
 				firefox_options.preferences.update({
 					'media.volume_scale':'0.0',
-					'general.useragent.override':user_agent,
-					'network.proxy.type':1,
-					'network.proxy.http':proxy.split(':')[0],
-					'network.proxy.http_port':int(proxy.split(':')[1]),
-					'network.proxy.ssl':proxy.split(':')[0],
-					'network.proxy.ssl_port':int(proxy.split(':')[1])
+					'general.useragent.override':user_agent
 				})
 				if args.headless:
 					firefox_options.add_argument('--headless')
@@ -123,7 +124,7 @@ def bot(id):
 					executable_path=path_join(executable_dir,'geckodriver.exe')
 				else:
 					executable_path=path_join(executable_dir,'geckodriver')
-				driver=webdriver.Firefox(options=firefox_options,service_log_path=devnull,executable_path=executable_path)
+				driver=webdriver.Firefox(options=firefox_options,seleniumwire_options=seleniumwire_options,service_log_path=devnull,executable_path=executable_path)
 			driver.header_overrides={
 				'Referer':choice(referers)
 			}
