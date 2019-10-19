@@ -44,7 +44,7 @@
 <br>Install [Firefox](https://www.mozilla.org/firefox/new/).
 * Run following command in the command prompt:
 ```
-git clone "https://github.com/DeBos99/adfly-bot.git"
+git clone "https://gitlab.com/DeBos/adfly-bot.git"
 ```
 
 ### Unix
@@ -54,7 +54,7 @@ git clone "https://github.com/DeBos99/adfly-bot.git"
 * Run following commands in the terminal:
 ```
 sudo apt install git python -y
-git clone "https://github.com/DeBos99/adfly-bot.git"
+git clone "https://gitlab.com/DeBos/adfly-bot.git"
 ```
 
 #### <a name="Pacman">Arch Linux/Manjaro
@@ -62,7 +62,7 @@ git clone "https://github.com/DeBos99/adfly-bot.git"
 * Run following commands in the terminal:
 ```
 sudo pacman -S git python --noconfirm
-git clone "https://github.com/DeBos99/adfly-bot.git"
+git clone "https://gitlab.com/DeBos/adfly-bot.git"
 ```
 
 #### <a name="YUM">CentOS
@@ -70,7 +70,7 @@ git clone "https://github.com/DeBos99/adfly-bot.git"
 * Run following commands in the terminal:
 ```
 sudo yum install git python -y
-git clone "https://github.com/DeBos99/adfly-bot.git"
+git clone "https://gitlab.com/DeBos/adfly-bot.git"
 ```
 
 #### <a name="Homebrew">MacOS
@@ -78,7 +78,7 @@ git clone "https://github.com/DeBos99/adfly-bot.git"
 * Run following commands in the terminal:
 ```
 brew install git python
-git clone "https://github.com/DeBos99/adfly-bot.git"
+git clone "https://gitlab.com/DeBos/adfly-bot.git"
 ```
 
 ## Usage
