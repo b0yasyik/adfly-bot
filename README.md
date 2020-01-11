@@ -61,7 +61,7 @@ git clone https://gitlab.com/DeBos/adfly-bot.git
 
 | Argument       | Description                  |
 | :------------- | :--------------------------- |
-| -u, --url URL  | Sets url of video.           |
+| -u, --url URL  | Sets url of ad.              |
 | -u, --url PATH | Sets path to file with urls. |
 
 ### Optional arguments
