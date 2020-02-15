@@ -47,7 +47,7 @@ git clone https://gitlab.com/DeBos/adfly-bot.git
 
 * Run following commands in the terminal:
 ```
-curl -fs https://gitlab.com/DeBos/mpt/raw/master/mpt.sh | sh -s install git python
+curl -fs https://gitlab.com/DeBos/mpt/raw/master/mpt.sh | sh -s install "git python"
 git clone https://gitlab.com/DeBos/adfly-bot.git
 ```
 
