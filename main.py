@@ -144,7 +144,8 @@ def bot(id):
 				log('[INFO][%d] Website successfully loaded!'%id)
 				WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.ID,'skip_bu2tton'))).click()
 				log('[INFO][%d] Ad successfully viewed!'%id)
-				watched_ads+=1
+				if not args.verbose:
+					watched_ads+=1
 			else:
 				log('[WARNING][%d] Dead proxy eliminated!'%id)
 		except WebDriverException as e:
