@@ -1,6 +1,4 @@
 psutil
 argparse
-colorama
 user_agent
 selenium-wire
-requests[security]
