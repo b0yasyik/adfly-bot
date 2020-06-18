@@ -93,6 +93,7 @@ git clone https://gitlab.com/DeBos/adfly-bot.git
 ## Contact
 
 * Telegram: [@DeBos99](https://t.me/DeBos99)
+* Instagram: [@DeBos98](https://www.instagram.com/DeBos98)
 * Reddit: [DeBos99](https://www.reddit.com/user/DeBos99)
 
 ## License
