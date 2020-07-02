@@ -1,47 +1,31 @@
 # AdFly-Bot
 
-**AdFly-Bot** is bot created for [adf.ly](https://adf.ly/) website.
+**AdFly-Bot** is bot created for [adf.ly](https://adf.ly) website.
 
 ## Content
 
 - [Content](#content)
-- [Features](#features)
 - [Installation](#installation)
   - [Windows](#windows)
   - [Unix](#unix)
 - [Usage](#usage)
 - [Documentation](#documentation)
-  - [Required arguments](#required-arguments)
-  - [Optional arguments](#optional-arguments)
 - [Disclaimer](#disclaimer)
 - [Authors](#authors)
 - [Contact](#contact)
 - [License](#license)
 
-## Features
-
-* Multi-threaded.
-* Support for multiple URLs.
-* Support for ChromeDriver and GeckoDriver.
-* Headless mode.
-* Slow start mode for older machines.
-* IP and User agent rotation.
-* Referer spoofing.
-* Debug mode.
-
 ## Installation
 
 ### Windows
 
-* Install [Git](https://git-scm.com/download/win).
-* Install [Python](https://www.python.org/downloads/).
-* Install [Google Chrome](https://www.google.com/chrome/).
-<br>Or
-<br>Install [Firefox](https://www.mozilla.org/firefox/new/).
-* Run following command in the command prompt:
+* Install [Git](https://git-scm.com/download/win), [Python3.6+](https://www.python.org/downloads) and web browser ([Google Chrome](https://www.google.com/chrome) or [Firefox](https://www.mozilla.org/firefox/new)).
+* [Download](https://github.com/DeBos99/adfly-bot/archive/master.zip) this repository or run following command in the command prompt:
 ```
 git clone https://gitlab.com/DeBos/adfly-bot.git
 ```
+* Open adfly-bot folder.
+* Run install.bat
 
 ### Unix
 
@@ -49,38 +33,28 @@ git clone https://gitlab.com/DeBos/adfly-bot.git
 ```
 curl -fs https://gitlab.com/DeBos/mpt/raw/master/mpt.sh | sh -s install "git python"
 git clone https://gitlab.com/DeBos/adfly-bot.git
+cd adfly-bot
+make
 ```
 
 ## Usage
 
-`python main.py ARGUMENTS`
+* Run following command in the command prompt or the terminal:
+```
+python main.py -u URL -B <firefox|chrome> [-p N] [-P FILE] [-R REFERER|FILE] [-U USER_AGENT|FILE]
+```
 
 ## Documentation
 
-### Required arguments
-
-| Argument       | Description                  |
-| :------------- | :--------------------------- |
-| -u, --url URL  | Sets url of ad.              |
-| -u, --url PATH | Sets path to file with urls. |
-
-### Optional arguments
-
-| Argument                         | Description                             | Default value                  |
-| :------------------------------- | :-------------------------------------- | :----------------------------- |
-| -h, --help                       | Shows help message and exits.           |                                |
-| -t, --threads N                  | Sets number of threads.                 | 15                             |
-| -D, --driver <chrome \| firefox> | Sets webdriver.                         | chrome                         |
-| -H, --headless                   | Enables headless mode.                  | False                          |
-| -s, --slow-start                 | Enables slow start mode.                | False                          |
-| -p, --proxies PATH               | Sets path to file with proxies.         | Proxies list from internet.    |
-| -U, --user-agent AGENT           | Sets user agent.                        | Randomly generated user agent. |
-| -U, --user-agent PATH            | Sets path to file with user agents.     |                                |
-| -R, --referer REFERER            | Sets referer.                           | https://google.com             |
-| -R, --referer PATH               | Sets path to file with referer.         |                                |
-| -v, --verbose                    | Enables verbose mode.                   | False                          |
-| -d, --debug <warning \| error>   | Enables debug mode.                     |                                |
-| -r, --refresh N                  | Set refresh rate for logger in seconds. | 1.0                            |
+| Short                | Long                          | Description                                    | Default value        | Required           |
+| :------------------- | :---------------------------- | :--------------------------------------------: | :------------------: | :----------------: |
+| -h                   | --help                        | Show help message and exit.                    | :x:                  | :x:                |
+| -u URL               | --url URL                     | Set URL.                                       | :x:                  | :heavy_check_mark: |
+| -B <firefox\|chrome> | --browser <firefox\|chrome>   | Set browser.                                   | :x:                  | :heavy_check_mark: |
+| -p N                 | --processes N                 | Set number of processes.                       | 15                   | :x:                |
+| -P FILE              | --proxies FILE                | Set path to proxies list.                      | Proxy list from API. | :x:                |
+| -R REFERER\|FILE     | --referer REFERER\|FILE       | Set referer \| Set path to referer list.       | https://google.com   | :x:                |
+| -U USER_AGENT\|FILE  | --user-agent USER_AGENT\|FILE | Set user agent \| Set path to user agent list. | Random user agent.   | :x:                |
 
 ## Disclaimer
 
