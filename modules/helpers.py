@@ -13,3 +13,9 @@ class File(object):
 		else:
 			print(f'Cannot read {path}')
 			sys.exit(1)
+class Input(object):
+	def get(prompt):
+		try:
+			return input(prompt)
+		except KeyboardInterrupt:
+			sys.exit(0)

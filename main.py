@@ -1,13 +1,13 @@
 import os
 import sys
 import signal
-import platform
 from pathlib import Path
 from argparse import ArgumentParser
 from multiprocessing import Process
-from modules.bot import *
+from modules.bot import Bot
 from modules.lists import *
-from modules.webdriver import *
+from modules.helpers import Input
+from modules.webdriver import WebDriver
 
 if __name__=='__main__':
 	if sys.version_info[:2]<(3,6):
@@ -21,22 +21,19 @@ if __name__=='__main__':
 	parser.add_argument('-R','--referer',help='Set referer | Set path to referer list',metavar='REFERER|FILE')
 	parser.add_argument('-U','--user-agent',help='Set user agent | Set path to user agent list',metavar='USER_AGENT|FILE')
 	args=parser.parse_args()
-	try:
-		if args.url:
-			url=args.url
-		else:
-			url=input('URL: ')
-		if args.browser:
-			browser=args.browser
-		else:
-			while True:
-				browser=input('Browser (chrome or firefox): ').lower()
-				if browser in ['chrome','firefox']:
-					break
-				else:
-					print('WebDriver has to be chrome or firefox.')
-	except KeyboardInterrupt:
-		sys.exit(0)
+	if args.url:
+		url=args.url
+	else:
+		url=Input.get('URL: ')
+	if args.browser:
+		browser=args.browser
+	else:
+		while True:
+			browser=Input.get('Browser (chrome or firefox): ').lower()
+			if browser in ['chrome','firefox']:
+				break
+			else:
+				print('WebDriver has to be chrome or firefox.')
 	drivers_path=Path(__file__).resolve().parent/'drivers'
 	if not drivers_path.is_dir():
 		drivers_path.mkdir()
@@ -44,7 +41,7 @@ if __name__=='__main__':
 		driver_name='gecko'
 	else:
 		driver_name='chrome'
-	if platform.system()=='Windows':
+	if WebDriver.system=='Windows':
 		file_extension='.exe'
 	else:
 		file_extension=''

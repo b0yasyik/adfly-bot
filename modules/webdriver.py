@@ -5,6 +5,7 @@ import platform
 import requests
 from tarfile import TarFile
 from zipfile import ZipFile
+from .helpers import Input
 
 class WebDriver(object):
 	system=platform.system()
@@ -29,7 +30,7 @@ class WebDriver(object):
 		if driver=='chrome':
 			if arch=='arm' or (WebDriver.system!='Windows' and arch=='32'):
 				print('Chromedriver does not support ARM and 32-bit Unix machines.')
-				answer=input('Do you want to install Geckodriver (Firefox) instead [Y/N]? ').lower()
+				answer=Input.get('Do you want to install Geckodriver (Firefox) instead [Y/N]? ').lower()
 				if answer=='y':
 					WebDriver.download('firefox')
 				else:
