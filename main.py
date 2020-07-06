@@ -58,6 +58,6 @@ if __name__=='__main__':
 	signal.signal(signal.SIGINT,signal.SIG_IGN)
 	for process in processes:
 		process.join()
-	if platform.system()=='Windows':
+	if WebDriver.system=='Windows':
 		os.system(f'taskkill /IM {browser}.exe /T /F >NUL 2>&1')
 	sys.exit(0)
