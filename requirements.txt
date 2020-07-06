@@ -1,6 +1,7 @@
-lxml
+bs4
 wget
 chardet
+html5lib
 pathlib2
 requests
 user_agent

@@ -3,7 +3,7 @@ import random
 import chardet
 import requests
 import user_agent
-import lxml.html
+from bs4 import BeautifulSoup
 from .helpers import File
 
 class CustomList(object):
@@ -18,7 +18,7 @@ class URLs(CustomList):
 			self.list=[url]
 		else:
 			super().__init__(url)
-		self.list=[[url,lxml.html.fromstring(requests.get(url).content).findtext('.//title')] for url in self.list]
+		self.list=[[url,BeautifulSoup(requests.get(url).text,'html5lib').title.text] for url in self.list]
 
 class Proxies(CustomList):
 	def __init__(self,path):
