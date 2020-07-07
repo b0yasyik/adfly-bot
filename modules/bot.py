@@ -43,7 +43,7 @@ class Bot(object):
 					options=FirefoxOptions()
 					options.preferences.update({
 						'media.volume_scale':'0.0',
-						'general.useragent.override':self.user_agents.get()
+						'general.useragent.override':user_agents.get()
 					})
 					options.add_argument('--headless')
 					WebDriver=Firefox
