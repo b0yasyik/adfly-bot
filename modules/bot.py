@@ -13,45 +13,44 @@ class Bot(object):
 	def __init__(self):
 		self.driver=None
 		self.running=True
-	def run(self,urls,browser,proxies,referers,user_agents,driver_filename):
+	def run(self,urls,browser,proxies,referers,user_agents,executable_path):
 		signal.signal(signal.SIGINT,self.quit)
 		logging.basicConfig(level=logging.CRITICAL)
 		while self.running:
 			try:
+				proxy=proxies.get()
 				seleniumwire_options={
 					'proxy':{
-						'http':f'http://{proxies.get()}',
-						'https':f'https://{proxies.get()}',
+						'http':f'http://{proxy}',
+						'https':f'https://{proxy}',
 						'no_proxy':'localhost,127.0.0.1'
 					},
 					'connection_timeout':None,
 					'verify_ssl':False
 				}
-				executable_path=Path(__file__).resolve().parent.parent/'drivers'
+				user_agent=user_agents.get()
 				if browser=='chrome':
 					options=ChromeOptions()
-					options.add_argument(f'--user-agent={user_agents.get()}')
-					options.add_argument('--mute-audio')
-					options.add_argument('--disable-extensions')
-					options.add_argument('--disable-gpu')
 					options.add_argument('--disable-dev-shm-usage')
+					options.add_argument('--disable-gpu')
+					options.add_argument('--mute-audio')
 					options.add_argument('--no-sandbox')
-					options.add_argument('--headless')
+					options.add_argument(f'--user-agent={user_agent}')
 					options.add_experimental_option('excludeSwitches',['enable-logging'])
 					WebDriver=Chrome
 				else:
 					options=FirefoxOptions()
 					options.preferences.update({
 						'media.volume_scale':'0.0',
-						'general.useragent.override':user_agents.get()
+						'general.useragent.override':user_agent
 					})
-					options.add_argument('--headless')
 					WebDriver=Firefox
+				options.add_argument('--headless')
 				self.driver=WebDriver(
+					executable_path=executable_path,
 					options=options,
-					seleniumwire_options=seleniumwire_options,
 					service_log_path=os.devnull,
-					executable_path=executable_path/driver_filename
+					seleniumwire_options=seleniumwire_options
 				)
 				self.driver.header_overrides={
 					'Referer':referers.get()

@@ -52,7 +52,7 @@ if __name__=='__main__':
 	proxies=Proxies(args.proxies)
 	referers=Referers(args.referer)
 	user_agents=UserAgents(args.user_agent)
-	processes=[Process(target=Bot().run,args=(urls,browser,proxies,referers,user_agents,f'{driver_name}driver{file_extension}'),daemon=True) for _ in range(args.processes)]
+	processes=[Process(target=Bot().run,args=(urls,browser,proxies,referers,user_agents,driver_file_path),daemon=True) for _ in range(args.processes)]
 	for process in processes:
 		process.start()
 	signal.signal(signal.SIGINT,signal.SIG_IGN)
