@@ -41,19 +41,20 @@ class Bot(object):
 					WebDriver=Chrome
 				else:
 					options=FirefoxOptions()
+					options.add_argument('--headless')
 					options.preferences.update({
 						'media.volume_scale':'0.0',
 						'media.peerconnection.enabled':False,
 						'general.useragent.override':user_agent
 					})
 					WebDriver=Firefox
-				options.add_argument('--headless')
 				self.driver=WebDriver(
 					executable_path=executable_path,
 					options=options,
 					service_log_path=os.devnull,
 					seleniumwire_options=seleniumwire_options
 				)
+				self.driver.minimize_window()
 				self.driver.header_overrides={
 					'Referer':referers.get()
 				}
@@ -64,6 +65,8 @@ class Bot(object):
 				except:
 					pass
 				finally:
+					print(self.driver.page_source)
+					self.quit()
 					if self.driver.title==url[1]:
 						WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.ID,'skip_bu2tton'))).send_keys(Keys.RETURN)
 			except:
