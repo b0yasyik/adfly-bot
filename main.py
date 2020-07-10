@@ -1,13 +1,12 @@
 import os
 import sys
 import signal
-from pathlib import Path
 from argparse import ArgumentParser
 from multiprocessing import Process
 from modules.bot import Bot
 from modules.lists import *
 from modules.helpers import Input
-from modules.webdriver import WebDriver
+from modules.webdriver import *
 
 if __name__=='__main__':
 	if sys.version_info[:2]<(3,6):
@@ -34,25 +33,16 @@ if __name__=='__main__':
 				break
 			else:
 				print('WebDriver has to be chrome or firefox.')
-	drivers_path=Path(__file__).resolve().parent/'drivers'
-	if not drivers_path.is_dir():
-		drivers_path.mkdir()
-	if browser=='firefox':
-		driver_name='gecko'
+	executable_path=WebDriver.install_if_not_installed(browser)
+	if browser=='chrome':
+		extension_path=Extension.install_if_not_installed()
 	else:
-		driver_name='chrome'
-	if WebDriver.system=='Windows':
-		file_extension='.exe'
-	else:
-		file_extension=''
-	driver_file_path=drivers_path/f'{driver_name}driver{file_extension}'
-	if not driver_file_path.is_file():
-		WebDriver.install(driver_file_path,browser)
+		extension_path=None
 	urls=URLs(url)
 	proxies=Proxies(args.proxies)
 	referers=Referers(args.referer)
 	user_agents=UserAgents(args.user_agent)
-	processes=[Process(target=Bot().run,args=(urls,browser,proxies,referers,user_agents,driver_file_path),daemon=True) for _ in range(args.processes)]
+	processes=[Process(target=Bot().run,args=(urls,browser,proxies,referers,user_agents,executable_path,extension_path),daemon=True) for _ in range(args.processes)]
 	for process in processes:
 		process.start()
 	signal.signal(signal.SIGINT,signal.SIG_IGN)

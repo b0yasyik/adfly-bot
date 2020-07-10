@@ -13,7 +13,7 @@ class Bot(object):
 	def __init__(self):
 		self.driver=None
 		self.running=True
-	def run(self,urls,browser,proxies,referers,user_agents,executable_path):
+	def run(self,urls,browser,proxies,referers,user_agents,executable_path,extension_path):
 		signal.signal(signal.SIGINT,self.quit)
 		logging.basicConfig(level=logging.CRITICAL)
 		while self.running:
@@ -31,17 +31,19 @@ class Bot(object):
 				user_agent=user_agents.get()
 				if browser=='chrome':
 					options=ChromeOptions()
-					options.add_argument('--disable-dev-shm-usage')
-					options.add_argument('--disable-gpu')
-					options.add_argument('--mute-audio')
 					options.add_argument('--no-sandbox')
+					options.add_argument('--mute-audio')
+					options.add_argument('--disable-gpu')
+					options.add_argument('--disable-dev-shm-usage')
 					options.add_argument(f'--user-agent={user_agent}')
 					options.add_experimental_option('excludeSwitches',['enable-logging'])
+					options.add_extension(extension_path)
 					WebDriver=Chrome
 				else:
 					options=FirefoxOptions()
 					options.preferences.update({
 						'media.volume_scale':'0.0',
+						'media.peerconnection.enabled':False,
 						'general.useragent.override':user_agent
 					})
 					WebDriver=Firefox
