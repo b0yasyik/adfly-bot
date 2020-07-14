@@ -67,8 +67,9 @@ python main.py -u URL -B <firefox|chrome> -p N -P FILE -R <REFERER|FILE> -U <USE
 ## Contact
 
 * Telegram: [@DeBos99](https://t.me/DeBos99)
-* Instagram: [@DeBos98](https://www.instagram.com/DeBos98)
 * Reddit: [DeBos99](https://www.reddit.com/user/DeBos99)
+* Twitter: [@DeBos99](https://www.twitter.com/DeBos99)
+* Instagram: [@DeBos98](https://www.instagram.com/DeBos98)
 
 ## License
 
