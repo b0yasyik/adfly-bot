@@ -12,13 +12,14 @@ class Extension(object):
 	extensions_path=Path(__file__).resolve().parent.parent/'extensions'
 	def download():
 		return wget.download('https://clients2.google.com/service/update2/crx?response=redirect&prodversion=9999&acceptformat=crx2,crx3&x=id%3Dcmjcmogcdofcljpojplgmfpheblcaehh%26uc')
-	def install_if_not_installed():
-		extension_path=Extension.extensions_path/'Easy WebRTC Block.crx'
-		if not extension_path.is_file():
-			filename=Extension.download()
-			Extension.extensions_path.mkdir(exist_ok=True)
-			Path(filename).rename(extension_path)
-		return extension_path
+	def install_if_not_installed(browser):
+		if browser=='chrome':
+			extension_path=Extension.extensions_path/'Easy WebRTC Block.crx'
+			if not extension_path.is_file():
+				filename=Extension.download()
+				Extension.extensions_path.mkdir(exist_ok=True)
+				Path(filename).rename(extension_path)
+			return extension_path
 
 class WebDriver(object):
 	system=platform.system()

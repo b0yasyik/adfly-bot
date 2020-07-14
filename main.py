@@ -12,36 +12,23 @@ if __name__=='__main__':
 	if sys.version_info[:2]<(3,6):
 		print('You need at least Python3.6 to run this program.')
 		sys.exit(1)
+	supported_browsers=['chrome','firefox']
 	parser=ArgumentParser()
 	parser.add_argument('-u','--url',help='Set URL | Set path to URL list',metavar='URL|FILE')
-	parser.add_argument('-B','--browser',choices=['chrome','firefox'],help='Set browser',metavar='WEBDRIVER')
 	parser.add_argument('-p','--processes',default=15,type=int,help='Set number of processes',metavar='N')
+	parser.add_argument('-B','--browser',choices=supported_browsers,help='Set browser',metavar='BROWSER')
 	parser.add_argument('-P','--proxies',help='Set path to proxy list',metavar='FILE')
 	parser.add_argument('-R','--referer',help='Set referer | Set path to referer list',metavar='REFERER|FILE')
 	parser.add_argument('-U','--user-agent',help='Set user agent | Set path to user agent list',metavar='USER_AGENT|FILE')
 	args=parser.parse_args()
-	if args.url:
-		url=args.url
-	else:
-		url=Input.get('URL: ')
-	if args.browser:
-		browser=args.browser
-	else:
-		while True:
-			browser=Input.get('Browser (chrome or firefox): ').lower()
-			if browser in ['chrome','firefox']:
-				break
-			else:
-				print('WebDriver has to be chrome or firefox.')
+	urls=URLs(args.url or Input.get('URL'))
+	browser=args.browser or Input.select('Browser',supported_browsers)
+	print('Click ENTER to use default value.')
+	proxies=Proxies(Input.get('Proxies') or args.proxies)
+	referers=Referers(Input.get('Referers') or args.referer)
+	user_agents=UserAgents(Input.get('User agents') or args.user_agent)
 	executable_path=WebDriver.install_if_not_installed(browser)
-	if browser=='chrome':
-		extension_path=Extension.install_if_not_installed()
-	else:
-		extension_path=None
-	urls=URLs(url)
-	proxies=Proxies(args.proxies)
-	referers=Referers(args.referer)
-	user_agents=UserAgents(args.user_agent)
+	extension_path=Extension.install_if_not_installed(browser)
 	processes=[Process(target=Bot().run,args=(urls,browser,proxies,referers,user_agents,executable_path,extension_path),daemon=True) for _ in range(args.processes)]
 	for process in processes:
 		process.start()

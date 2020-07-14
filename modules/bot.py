@@ -65,7 +65,6 @@ class Bot(object):
 				except:
 					pass
 				finally:
-					print(self.driver.page_source)
 					self.quit()
 					if self.driver.title==url[1]:
 						WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.ID,'skip_bu2tton'))).send_keys(Keys.RETURN)
