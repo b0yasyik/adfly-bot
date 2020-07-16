@@ -10,15 +10,18 @@ from .helpers import Input
 
 class Extension(object):
 	extensions_path=Path(__file__).resolve().parent.parent/'extensions'
-	def download():
-		return wget.download('https://clients2.google.com/service/update2/crx?response=redirect&prodversion=9999&acceptformat=crx2,crx3&x=id%3Dcmjcmogcdofcljpojplgmfpheblcaehh%26uc')
 	def install_if_not_installed(browser):
 		if browser=='chrome':
 			extension_path=Extension.extensions_path/'Easy WebRTC Block.crx'
 			if not extension_path.is_file():
-				filename=Extension.download()
+				print(f'Installing extension for {browser}...')
 				Extension.extensions_path.mkdir(exist_ok=True)
-				Path(filename).rename(extension_path)
+				wget.download(
+					'https://clients2.google.com/service/update2/crx?response=redirect&prodversion=9999&acceptformat=crx2,crx3&x=id%3Dcmjcmogcdofcljpojplgmfpheblcaehh%26uc',
+					out=str(extension_path),
+					bar=wget.bar_thermometer
+				)
+				print(f'\nInstalled extension for {browser}.')
 			return extension_path
 
 class WebDriver(object):
@@ -66,10 +69,11 @@ class WebDriver(object):
 				pass
 			else:
 				driver_version=requests.get('https://api.github.com/repos/mozilla/geckodriver/releases/latest').json()['tag_name']
-		return wget.download(links[browser][WebDriver.system].format(driver_version,arch))
+		return wget.download(links[browser][WebDriver.system].format(driver_version,arch),bar=wget.bar_thermometer)
 	def install_if_not_installed(browser):
 		executable_path=WebDriver.get_executable_path(browser)
 		if not executable_path.is_file():
+			print(f'Installing webdriver for {browser}...')
 			filename=WebDriver.download(browser)
 			if filename.endswith('.zip'):
 				open_archive=ZipFile
@@ -81,4 +85,5 @@ class WebDriver(object):
 			Path(filename).unlink()
 			if WebDriver.system!='Windows':
 				executable_path.chmod(stat.S_IRWXU)
+			print(f'\nInstalled webdriver for {browser}.')
 		return executable_path

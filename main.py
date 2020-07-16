@@ -23,18 +23,22 @@ if __name__=='__main__':
 	args=parser.parse_args()
 	urls=URLs(args.url or Input.get('URL'))
 	browser=args.browser or Input.select('Browser',supported_browsers)
-	print('Click ENTER to use default value.')
-	proxies=Proxies(Input.get('Proxies') or args.proxies)
-	referers=Referers(Input.get('Referers') or args.referer)
-	user_agents=UserAgents(Input.get('User agents') or args.user_agent)
+	print('For next options click ENTER to use [default value].')
+	proxies=Proxies(Input.get('Proxies [proxy list from API]') or args.proxies)
+	referers=Referers(Input.get('Referers [https://google.com]') or args.referer)
+	user_agents=UserAgents(Input.get('User agents [random user agent]') or args.user_agent)
 	executable_path=WebDriver.install_if_not_installed(browser)
 	extension_path=Extension.install_if_not_installed(browser)
 	processes=[Process(target=Bot().run,args=(urls,browser,proxies,referers,user_agents,executable_path,extension_path),daemon=True) for _ in range(args.processes)]
+	print(f'Starting {args.processes} processes...')
 	for process in processes:
 		process.start()
+	print(f'Started {args.processes} processes.')
+	print(f'Click ctrl+c when you want to stop the bot.')
 	signal.signal(signal.SIGINT,signal.SIG_IGN)
 	for process in processes:
 		process.join()
 	if WebDriver.system=='Windows':
 		os.system(f'taskkill /IM {browser}.exe /T /F >NUL 2>&1')
+	print(f'\rExiting the bot...')
 	sys.exit(0)
