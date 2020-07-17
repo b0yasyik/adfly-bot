@@ -24,9 +24,9 @@ if __name__=='__main__':
 	urls=URLs(args.url or Input.get('URL'))
 	browser=args.browser or Input.select('Browser',supported_browsers)
 	print('For next options click ENTER to use [default value].')
-	proxies=Proxies(Input.get('Proxies [proxy list from API]') or args.proxies)
-	referers=Referers(Input.get('Referers [https://google.com]') or args.referer)
-	user_agents=UserAgents(Input.get('User agents [random user agent]') or args.user_agent)
+	proxies=Proxies(args.proxies or Input.get('Proxies [proxy list from API]'))
+	referers=Referers(args.referer or Input.get('Referers [https://google.com]'))
+	user_agents=UserAgents(args.user_agent or Input.get('User agents [random user agent]'))
 	executable_path=WebDriver.install_if_not_installed(browser)
 	extension_path=Extension.install_if_not_installed(browser)
 	processes=[Process(target=Bot().run,args=(urls,browser,proxies,referers,user_agents,executable_path,extension_path),daemon=True) for _ in range(args.processes)]
