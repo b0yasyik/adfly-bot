@@ -41,20 +41,20 @@ make
 
 * Run following command in the command prompt or the terminal:
 ```
-python main.py -u URL -B <firefox|chrome> -p N -P FILE -R <REFERER|FILE> -U <USER_AGENT|FILE>
+python main.py [-h] [-u URL|FILE] [-p N] [-B firefox|chrome] [-P FILE] [-R REFERER|FILE] [-U USER_AGENT|FILE]
 ```
 
 ## Documentation
 
-| Short                  | Long                          | Description                                    | Default value        |
-| :--------------------- | :---------------------------- | :--------------------------------------------: | :------------------: |
-| -h                     | --help                        | Show help message and exit.                    | :x:                  |
-| -u URL                 | --url URL                     | Set URL.                                       | :x:                  |
-| -p N                   | --processes N                 | Set number of processes.                       | 15                   |
-| -B <firefox\|chrome>   | --browser <firefox\|chrome>   | Set browser.                                   | :x:                  |
-| -P FILE                | --proxies FILE                | Set path to proxies list.                      | Proxy list from API. |
-| -R <REFERER\|FILE>     | --referer REFERER\|FILE       | Set referer \| Set path to referer list.       | https://google.com   |
-| -U <USER_AGENT\|FILE>  | --user-agent USER_AGENT\|FILE | Set user agent \| Set path to user agent list. | Random user agent.   |
+| Short               | Long                          | Description                                    | Default value        |
+| :------------------ | :---------------------------- | :--------------------------------------------: | :------------------: |
+| -h                  | --help                        | Show help message and exit.                    | :x:                  |
+| -u URL\|FILE        | --url URL\|FILE               | Set URL | Set path to URL list.                | :x:                  |
+| -p N                | --processes N                 | Set number of processes.                       | 15                   |
+| -B firefox\|chrome  | --browser firefox\|chrome     | Set browser.                                   | :x:                  |
+| -P FILE             | --proxies FILE                | Set path to proxies list.                      | Proxy list from API. |
+| -R REFERER\|FILE    | --referer REFERER\|FILE       | Set referer \| Set path to referer list.       | https://google.com   |
+| -U USER_AGENT\|FILE | --user-agent USER_AGENT\|FILE | Set user agent \| Set path to user agent list. | Random user agent.   |
 
 ## Disclaimer
 
