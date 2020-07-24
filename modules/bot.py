@@ -1,5 +1,4 @@
 import os
-import signal
 import logging
 from pathlib import Path
 from selenium.common.exceptions import TimeoutException
@@ -10,13 +9,9 @@ from selenium.webdriver.support.wait import WebDriverWait
 from seleniumwire.webdriver import Chrome,ChromeOptions,Firefox,FirefoxOptions
 
 class Bot(object):
-	def __init__(self):
-		self.driver=None
-		self.running=True
-	def run(self,urls,browser,proxies,referers,user_agents,executable_path,extension_path):
-		signal.signal(signal.SIGINT,self.quit)
+	def run(urls,browser,proxies,referers,user_agents,executable_path,extension_path):
 		logging.basicConfig(level=logging.CRITICAL)
-		while self.running:
+		while True:
 			try:
 				proxy=proxies.get()
 				seleniumwire_options={
@@ -48,34 +43,29 @@ class Bot(object):
 						'general.useragent.override':user_agent
 					})
 					WebDriver=Firefox
-				self.driver=WebDriver(
+				driver=WebDriver(
 					executable_path=executable_path,
 					options=options,
 					service_log_path=os.devnull,
 					seleniumwire_options=seleniumwire_options
 				)
-				self.driver.minimize_window()
-				self.driver.header_overrides={
+				driver.minimize_window()
+				driver.header_overrides={
 					'Referer':referers.get()
 				}
-				self.driver.set_page_load_timeout(60)
+				driver.set_page_load_timeout(60)
 				url=urls.get()
 				try:
-					self.driver.get(url[0])
+					driver.get(url[0])
 				except:
 					pass
 				finally:
-					if self.driver.title==url[1]:
-						WebDriverWait(self.driver,10).until(EC.element_to_be_clickable((By.ID,'skip_bu2tton'))).send_keys(Keys.RETURN)
+					if driver.title==url[1]:
+						WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.ID,'skip_bu2tton'))).send_keys(Keys.RETURN)
 			except:
 				pass
 			finally:
-				self.close()
-	def close(self):
-		try:
-			self.driver.quit()
-		except:
-			pass
-	def quit(self,*args):
-		self.running=False
-		self.close()
+				try:
+					driver.quit()
+				except:
+					pass
