@@ -2,6 +2,8 @@ import os
 import sys
 import stat
 import platform
+from tarfile import TarFile
+from zipfile import ZipFile
 
 import wget
 import requests
