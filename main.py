@@ -34,8 +34,8 @@ class Program(object):
         supported_browsers = ['chrome',
                               'firefox']
         parser = ArgumentParser()
-        parser.add_argument('-u', '--url',
-                            help=('Set URL | ' 'Set path to URL list'),
+        parser.add_argument('-u', '--urls',
+                            help=('Set URL | Set path to file with URLs'),
                             metavar='URL|FILE')
         parser.add_argument('-p', '--processes',
                             default=15,
@@ -47,25 +47,26 @@ class Program(object):
                             help='Set browser',
                             metavar='BROWSER')
         parser.add_argument('-P', '--proxies',
-                            help='Set path to proxy list',
+                            help='Set path to file with proxies',
                             metavar='FILE')
-        parser.add_argument('-R', '--referer',
-                            help='Set referer | Set path to referer list',
+        parser.add_argument('-R', '--referers',
+                            help='Set referer | '\
+                                 'Set path to file with referers',
                             metavar='REFERER|FILE')
-        parser.add_argument('-U', '--user-agent',
+        parser.add_argument('-U', '--user-agents',
                             help='Set user agent | '
-                                 'Set path to user agent list',
+                                 'Set path to file with user agents',
                             metavar='USER_AGENT|FILE')
         args = parser.parse_args()
-        urls = URLs(args.url or Input.get('URL'))
+        urls = URLs(args.urls or Input.get('URLs'))
         Program.browser = (args.browser or
                            Input.select('Browser', supported_browsers))
         print('For next options click ENTER to use [default value].')
         proxies = Proxies(args.proxies or
                           Input.get('Proxies [proxy list from API]'))
-        referers = Referers(args.referer or
+        referers = Referers(args.referers or
                             Input.get('Referers [https://google.com]'))
-        user_agents = UserAgents(args.user_agent or
+        user_agents = UserAgents(args.user_agents or
                                  Input.get('User agents [random user agent]'))
         executable_path = WebDriver.install_if_not_installed(Program.browser)
         extension_path = Extension.install_if_not_installed(Program.browser)
