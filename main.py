@@ -35,7 +35,7 @@ class Program(object):
                               'firefox']
         parser = ArgumentParser()
         parser.add_argument('-u', '--urls',
-                            help=('Set URL | Set path to file with URLs'),
+                            help='Set URL | Set path to file with URLs',
                             metavar='URL|FILE')
         parser.add_argument('-p', '--processes',
                             default=15,
