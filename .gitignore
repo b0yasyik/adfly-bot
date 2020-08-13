@@ -1,3 +1,4 @@
+*.bak
 *.txt
 !requirements.txt
 drivers/
